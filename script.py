@@ -71,6 +71,6 @@ def ulta1(url, page):
 
 if __name__ == "__main__":
 
-	for page in range(20,30):
+	for page in range(21,30):
 		ulta1(f'https://www.ulta.com/search?search=Inophyllum+Seed+Oil&page={page}',page)
 
