@@ -61,7 +61,7 @@ def ulta1(url, page):
 			product = [company.text, brand_name.text, category.text, ingredients.text, link, num, reviews.text]
 			products.append(product)
 	fields = ['company', 'product name ', 'category', 'ingredients', 'link', 'total number of reviews', 'product rate ']
-	with open(f'Inophyllum_Seed_Oil_{page}.csv', 'w') as f:
+	with open(f'beeswax_{page}.csv', 'w') as f:
 
 		csv_writer = csv.writer(f)
 		csv_writer.writerow(fields)
@@ -71,6 +71,6 @@ def ulta1(url, page):
 
 if __name__ == "__main__":
 
-	for page in range(20,30):
-		ulta1(f'https://www.ulta.com/search?search=Inophyllum+Seed+Oil&page={page}',page)
+	for page in range(1,60):
+		ulta1(f'https://www.ulta.com/search?search=beeswax&page={page}',page)
 
