@@ -7,10 +7,46 @@ import re
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 import csv
+from bs4 import BeautifulSoup
+import pandas as pd
+from pdf import download_pdf_file
 options = webdriver.ChromeOptions()
 options.add_experimental_option("detach",True )
 #options.add_argument("headless")
 driver = webdriver.Chrome(options=options)
+
+
+def download_pdf(pdf):
+	import requests
+	pdf_url = driver.current_url  # Get Current URL
+	response = requests.get(pdf_url)
+	file_name = pdf
+	with open(file_name, 'wb') as f:
+		f.write(response.content)
+
+def google (query):
+	options = webdriver.ChromeOptions()
+	options.add_experimental_option("detach", True)
+	options.add_argument("headless")
+	driver = webdriver.Chrome(options=options)
+	n_pages = 50
+	links = []
+	urls = []
+	pdf = []
+	for page in range(1, n_pages):
+		url = "http://www.google.com/search?q=" + query + "&start=" + str((page - 1) * 10)
+		driver.get(url)
+		soup = BeautifulSoup(driver.page_source, 'html.parser')
+		# soup = BeautifulSoup(r.text, 'html.parser')
+
+		search = soup.find_all('div', class_="yuRUbf")
+		for h in search:
+			links.append(h.a.get('href'))
+			if h.a.get('href')[-4:] == '.pdf':
+				pdf.append(h.a.get('href'))
+			else :
+				urls.append(h.a.get('href'))
+	return pdf , urls
 
 def ulta():
 	options = webdriver.ChromeOptions()
@@ -142,4 +178,22 @@ def sephora():
 
 #ulta()
 
-sephora()
+#sephora()
+
+query = "zinc oxide"
+pdfs , urls =google( query )
+#print(len(pdfs))
+urls = pd.DataFrame(urls)
+fields = ['url']
+urls.to_csv('t.csv',index=False)
+
+for pdf in pdfs :
+
+
+	#download_pdf(pdf)
+	try :
+		time.sleep(10)
+		download_pdf_file(pdf)
+
+	except :
+		print(f'can not download This {pdf}')

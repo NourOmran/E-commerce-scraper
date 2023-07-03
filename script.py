@@ -7,10 +7,11 @@ from selenium.webdriver.support import expected_conditions
 import csv
 
 
+
 def ulta1(url, page):
 	options = webdriver.ChromeOptions()
 	options.add_experimental_option("detach", True)
-	options.add_argument("headless")
+	#options.add_argument("headless")
 
 	driver = webdriver.Chrome(options=options)
 	driver.get(url)
