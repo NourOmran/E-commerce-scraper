@@ -7,11 +7,10 @@ from selenium.webdriver.support import expected_conditions
 import csv
 
 
-
 def ulta1(url, page):
 	options = webdriver.ChromeOptions()
 	options.add_experimental_option("detach", True)
-	#options.add_argument("headless")
+	options.add_argument("headless")
 
 	driver = webdriver.Chrome(options=options)
 	driver.get(url)
@@ -72,6 +71,6 @@ def ulta1(url, page):
 
 if __name__ == "__main__":
 
-	for page in range(21,30):
+	for page in range(20,30):
 		ulta1(f'https://www.ulta.com/search?search=Inophyllum+Seed+Oil&page={page}',page)
 
